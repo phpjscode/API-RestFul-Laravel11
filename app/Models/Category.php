@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Product;
 use Illuminate\Database\Eloquent\Model;
 
 class Category extends Model
@@ -15,4 +16,9 @@ class Category extends Model
         'name',
         'description',
     ];
+
+    public function products(): BelongsToMany
+    {
+        return $this->belongsToMany(Product::class); // pertenece a muchos products
+    }
 }
