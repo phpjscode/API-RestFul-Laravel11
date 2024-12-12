@@ -30,7 +30,7 @@ class User extends Authenticatable
         'email',
         'password',
         'verified',
-        'varification_token',
+        'verification_token',
         'admin',
     ];
 
