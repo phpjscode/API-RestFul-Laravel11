@@ -11,6 +11,10 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 class ProductFactory extends Factory
 {
     /**
+     * php artisan make:factory ProductFactory --model=Product
+     */
+    
+    /**
      * Define the model's default state.
      *
      * @return array<string, mixed>

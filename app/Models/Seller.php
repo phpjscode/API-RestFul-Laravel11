@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Seller extends User
 {
-    public function hasMany(): HasMany
+    public function products(): HasMany
     {
         return $this->hasMany(Product::class); // Un vendedor tiene muchos productos
     }
