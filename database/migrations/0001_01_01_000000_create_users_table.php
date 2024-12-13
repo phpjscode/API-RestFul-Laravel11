@@ -19,7 +19,7 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->string('verified')->default(User::USUARIO_NO_VERIFICADO);
-            $table->string('varification_token')->nullable();
+            $table->string('verification_token')->nullable();
             $table->string('admin')->default(User::USUARIO_REGULAR);
             $table->rememberToken();
             $table->timestamps();

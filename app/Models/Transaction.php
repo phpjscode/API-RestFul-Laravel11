@@ -6,9 +6,12 @@ use App\Models\Buyer;
 use App\Models\Product;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Transaction extends Model
 {
+    use HasFactory;
+    
     /**
      * The attributes that are mass assignable.
      *
