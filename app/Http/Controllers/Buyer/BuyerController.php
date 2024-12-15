@@ -31,6 +31,12 @@ class BuyerController extends Controller
      */
     public function show(string $id)
     {
-        //
+        // $comprador = Buyer::has('transactions')->findOrFail($id);
+        // 
+        // $comprador = Buyer::hasTransactions()->findOrFail($id); // Hacemos uso del local Scope
+        // 
+        $comprador = Buyer::findOrFail($id); // Hacemos uso del global Scope
+
+        return response()->json(['data' => $comprador], 200);
     }
 }
