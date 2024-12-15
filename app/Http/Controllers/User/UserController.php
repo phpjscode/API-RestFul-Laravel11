@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers\User;
 
-use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class UserController extends Controller
 {
@@ -12,7 +13,18 @@ class UserController extends Controller
      */
     public function index()
     {
-        //
+        $usuarios = User::all();
+        // $usuarios = User::get();
+
+        // return $usuarios;
+        // return response()->json($usuarios, 200);
+        return response()->json(['data' => $usuarios], 200);
+
+        // $headers = [
+        //     'Content-Type' => 'application/json; charset=utf-8',
+        // ];
+        // return response()->json($usuarios, 200, $headers);
+        // 
     }
 
     /**
@@ -28,7 +40,7 @@ class UserController extends Controller
      */
     public function show(string $id)
     {
-        //
+        
     }
 
     /**
