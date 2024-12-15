@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers\Buyer;
 
-use App\Http\Controllers\Controller;
+use App\Models\Buyer;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class BuyerController extends Controller
 {
@@ -12,37 +13,18 @@ class BuyerController extends Controller
      */
     public function index()
     {
-        //
-    }
+        // $compradores = Buyer::all(); // Listará todos los usuarios
+        $compradores = Buyer::has('transactions')->get(); // Todos los usuarios que tengan transacciones - has recibe el nombre de una relación de Buyer
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
+        // dd($compradores);
+
+        return response()->json(['data' => $compradores], 200);
     }
 
     /**
      * Display the specified resource.
      */
     public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
     {
         //
     }

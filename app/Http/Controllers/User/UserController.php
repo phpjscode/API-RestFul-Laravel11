@@ -54,8 +54,9 @@ class UserController extends Controller
         // dd($campos);
         // $campos['password'] = bcrypt($request->password);
         $campos['password'] = Hash::make($request->password);
+        $campos['email_verified_at'] = null; // Fecha y hora en que el email fue verificado.
         $campos['verified'] = User::USUARIO_NO_VERIFICADO;
-        $campos['verification_token'] = User::generarVerificationToken();
+        $campos['verification_token'] = User::generarVerificationToken(); // Código de verificación de electrónico
         $campos['admin'] = User::USUARIO_REGULAR;
 
         $usuario = User::create($campos);
