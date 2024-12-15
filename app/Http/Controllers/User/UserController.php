@@ -4,6 +4,7 @@ namespace App\Http\Controllers\User;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 
@@ -89,7 +90,59 @@ class UserController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $user = User::findOrFail($id);
+        // dd($user);
+
+        // dd($user, request()->all(), $request->all());
+        // 
+        // $reglas = [
+        //     // 'email' => 'email|unique:users,email,' . $user->id,
+        //     'email' => ['email', Rule::unique('users')->ignore($user->id)],
+        //     'password' => 'min:6|confirmed',
+        //     'admin' => 'in:' . User::USUARIO_ADMINISTRADOR . ',' . User::USUARIO_REGULAR,
+        // ];
+
+        $reglas = [
+            'email' => ['email', 'unique:users,email,' . $user->id],
+            // 'email' => ['email', Rule::unique('users')->ignore($user->id)],
+            // 'email' => ['email', Rule::unique('users', 'email')->ignore($user->id)],
+            'password' => ['min:6', 'confirmed'],
+            'admin' => ['in:' . User::USUARIO_ADMINISTRADOR . ',' . User::USUARIO_REGULAR],
+        ];
+
+        $request->validate($reglas);
+
+        if ($request->has('name')) { // Si la petición tiene un campo name
+            $user->name = $request->name;
+            // $user->name = request()->name;
+            // $user->name = request()->input('name');
+        }
+
+        if ($request->has('email') && $user->email != $request->email) {
+            $user->verified = User::USUARIO_NO_VERIFICADO; // Obs: Si es 1 y se cambia a 0 entonces en $user->esVerificado() devuelve Falso
+            $user->verification_token = User::generarVerificationToken();
+            $user->email = $request->email;
+        }
+
+        if ($request->has('password')) {
+            $user->password = bcrypt($request->password);
+            // $user->password = Hash::make($request->password);
+        }
+
+        if ($request->has('admin')) {
+            if (!$user->esVerificado()) {
+                return response()->json(['error' => 'Unicamente los usuarios verificados pueden cambiar su valor de administrador.', 'code' => 409], 409);
+            }
+            $user->admin = $request->admin;
+        }
+
+        if (!$user->isDirty()) { // isDirty determina si alguno de los atributos del modelo ha cambiado respecto al valor actual
+            return response()->json(['error' => 'Se debe especificar al menos un valor diferente para actualizar.', 'code' => 422], 422);
+        }
+
+        $user->save();
+
+        return response()->json(['data' => $user], 200);
     }
 
     /**
