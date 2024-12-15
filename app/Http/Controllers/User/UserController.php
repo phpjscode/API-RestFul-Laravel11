@@ -110,8 +110,11 @@ class UserController extends Controller
             'admin' => ['in:' . User::USUARIO_ADMINISTRADOR . ',' . User::USUARIO_REGULAR],
         ];
 
+        // request()->validate($reglas);
         $request->validate($reglas);
 
+        // dd(request()->all(), $request->all(), $user, $request->validate($reglas));
+        // 
         if ($request->has('name')) { // Si la petición tiene un campo name
             $user->name = $request->name;
             // $user->name = request()->name;
@@ -150,6 +153,10 @@ class UserController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $user = User::findOrFail($id);
+
+        $user->delete();
+
+        return response()->json(['data' => $user], 200);
     }
 }
