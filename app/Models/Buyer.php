@@ -15,4 +15,17 @@ class Buyer extends User
         // return $this->hasMany(Transaction::class, 'buyer_id'); // Un comprador tiene muchas transacciones
         return $this->hasMany(Transaction::class); // Un comprador tiene muchas transacciones
     }
+
+    public function scopeHasTransactions($query)
+    {
+        // dd($query);
+        $query->has('transactions');
+        // $query->has('transactions')->orderBy('id', 'asc');
+    }
+
+    public function scopeIdAscending($query)
+    {
+        // dd($query);
+        $query->orderBy('id', 'asc');
+    }
 }

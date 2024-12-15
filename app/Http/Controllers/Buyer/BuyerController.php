@@ -14,9 +14,13 @@ class BuyerController extends Controller
     public function index()
     {
         // $compradores = Buyer::all(); // Listará todos los usuarios
-        $compradores = Buyer::has('transactions')->get(); // Todos los usuarios que tengan transacciones - has recibe el nombre de una relación de Buyer
+        // $compradores = Buyer::has('transactions')->get(); // Todos los usuarios que tengan transacciones - has recibe el nombre de una relación de Buyer
 
-        // dd($compradores);
+        // $compradores = Buyer::hasTransactions()->get(); // Hacemos uso del local Scope para todos los usuarios que tengan transacciones - has recibe el nombre de una relación de Buyer
+        
+        $compradores = Buyer::hasTransactions()->idAscending()->get(); // Hacemos uso del local Scope para todos los usuarios que tengan transacciones - has recibe el nombre de una relación de Buyer
+
+        
 
         return response()->json(['data' => $compradores], 200);
     }

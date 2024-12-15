@@ -123,6 +123,7 @@ class UserController extends Controller
         }
 
         if ($request->has('email') && $user->email != $request->email) {
+            $user->email_verified_at = null; // Fecha y hora en que el email fue verificado.
             $user->verified = User::USUARIO_NO_VERIFICADO; // Obs: Si es 1 y se cambia a 0 entonces en $user->esVerificado() devuelve Falso
             $user->verification_token = User::generarVerificationToken();
             $user->email = $request->email;
