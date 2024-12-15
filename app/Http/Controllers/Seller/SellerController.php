@@ -23,6 +23,8 @@ class SellerController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $vendedor = Seller::has('products')->findOrFail($id);
+
+        return response()->json(['data' => $vendedor], 200);
     }
 }
