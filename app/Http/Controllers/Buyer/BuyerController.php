@@ -18,9 +18,10 @@ class BuyerController extends Controller
 
         // $compradores = Buyer::hasTransactions()->get(); // Hacemos uso del local Scope para todos los usuarios que tengan transacciones - has recibe el nombre de una relación de Buyer
         
-        $compradores = Buyer::hasTransactions()->idAscending()->get(); // Hacemos uso del local Scope para todos los usuarios que tengan transacciones - has recibe el nombre de una relación de Buyer
+        // $compradores = Buyer::hasTransactions()->idAscending()->get(); // Hacemos uso del local Scope para todos los usuarios que tengan transacciones - has recibe el nombre de una relación de Buyer
 
-        
+         $compradores = Buyer::all(); // Listará todos los buyer haciendo uso del global scope 
+        // $compradores = Buyer::orderBy('id')->get(); // Listará todos los buyer haciendo uso del global scope 
 
         return response()->json(['data' => $compradores], 200);
     }
