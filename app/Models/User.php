@@ -6,6 +6,7 @@ namespace App\Models;
 use Illuminate\Support\Str;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
@@ -80,4 +81,77 @@ class User extends Authenticatable
         // return str_random(40); // Laravel < 6.0
         return Str::random(40); 
     }
+
+    public function name(): Attribute
+    {
+        return Attribute::make(
+            get: fn (string $value, array $attributes) => $attributes['name'] = ucwords($value),
+            set: fn (string $value, array $attributes) => $attributes['name'] = strtolower($value)
+            // get: fn (string $value) => ucwords($value),
+            // set: fn (string $value) => strtolower($value)
+        );
+    }
+
+    public function email(): Attribute
+    {
+        return Attribute::make(
+            set: fn (string $value) => strtolower($value),
+        );
+    }
+
+    // public function name(): Attribute
+    // {
+    //     return new Attribute(
+    //         get: fn ($value, $attributes) => ucwords($value),
+    //         // set: fn ($value, $attributes) => strtolower($value)
+    //         set: fn ($value, $attributes) => $attributes['name'] = strtolower($value)
+    //     );
+    // }
+
+    // public function email(): Attribute
+    // {
+    //     return new Attribute(
+    //         // set: fn ($value, $attributes) => strtolower($value),
+    //         set: fn ($value, $attributes) => $attributes['email'] = strtolower($value)
+    //     );
+    // }
+
+    // public function name(): Attribute
+    // {
+    //     return new Attribute(
+    //         get: function ($value, $attributes) {
+    //             return ucwords($value);
+    //         },
+    //         set: function ($value, $attributes) {
+    //             // return strtolower($value);
+    //             return $attributes['name'] = strtolower($value);
+    //         }
+    //     );
+    // }
+
+    // public function email(): Attribute
+    // {
+    //     return new Attribute(
+    //         set: function ($value, $attributes) {
+    //             // return strtolower($value);
+    //             return $attributes['email'] = strtolower($value);
+    //         }
+
+    //     );
+    // }
+
+    // public function getNameAttribute($value)
+    // {
+    //     return ucwords($value);
+    // }
+
+    // public function setNameAttribute($value)
+    // {
+    //     $this->attributes['name'] = strtolower($value);
+    // } 
+
+    // public function setEmailAttribute($value)
+    // {
+    //     $this->attributes['email'] = strtolower($value);
+    // }
 }

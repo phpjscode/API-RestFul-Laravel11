@@ -27,10 +27,11 @@ class UserFactory extends Factory
         return [
             'name' => fake()->name(),
             'email' => fake()->unique()->safeEmail(),
-            'email_verified_at' => now(),
+            // 'email_verified_at' => now(),
             'password' => static::$password ??= Hash::make('password'),
             'remember_token' => Str::random(10),
             'verified' => $verificado = fake()->randomElement([User::USUARIO_VERIFICADO, User::USUARIO_NO_VERIFICADO]),
+            'email_verified_at' => $verificado == User::USUARIO_VERIFICADO ? now() : null,
             'verification_token' => $verificado == User::USUARIO_VERIFICADO ? null : User::generarVerificationToken(),
             'admin' => fake()->randomElement([User::USUARIO_ADMINISTRADOR, User::USUARIO_REGULAR]),
         ];
