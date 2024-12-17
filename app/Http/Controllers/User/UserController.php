@@ -22,7 +22,8 @@ class UserController extends ApiController
 
         // return $usuarios;
         // return response()->json($usuarios, 200);
-        return response()->json(['data' => $usuarios], 200);
+        // return response()->json(['data' => $usuarios], 200);
+        return $this->showAll($usuarios);
 
         // $headers = [
         //     'Content-Type' => 'application/json; charset=utf-8',
@@ -74,7 +75,8 @@ class UserController extends ApiController
         //     'admin' => User::USUARIO_REGULAR,
         // ]);
 
-        return response()->json(['data' => $usuario], 201);
+        // return response()->json(['data' => $usuario], 201);
+        return $this->showOne($usuario, 201);
     }
 
     /**
@@ -85,7 +87,8 @@ class UserController extends ApiController
         // $usuario = User::find($id);
         $usuario = User::findOrFail($id);
 
-        return response()->json(['data' => $usuario], 200);
+        // return response()->json(['data' => $usuario], 200);
+        return $this->showOne($usuario);
     }
 
     /**
@@ -149,7 +152,8 @@ class UserController extends ApiController
 
         $user->save();
 
-        return response()->json(['data' => $user], 200);
+        // return response()->json(['data' => $user], 200);
+        return $this->showOne($user);
     }
 
     /**
@@ -161,6 +165,7 @@ class UserController extends ApiController
 
         $user->delete();
 
-        return response()->json(['data' => $user], 200);
+        // return response()->json(['data' => $user], 200);
+        return $this->showOne($user);
     }
 }

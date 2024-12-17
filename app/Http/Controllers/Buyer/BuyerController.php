@@ -25,7 +25,8 @@ class BuyerController extends ApiController
          $compradores = Buyer::all(); // Listará todos los buyer haciendo uso del global scope 
         // $compradores = Buyer::orderBy('id')->get(); // Listará todos los buyer haciendo uso del global scope 
 
-        return response()->json(['data' => $compradores], 200);
+        // return response()->json(['data' => $compradores], 200);
+        return $this->showAll($compradores);
     }
 
     /**
@@ -39,6 +40,7 @@ class BuyerController extends ApiController
         // 
         $comprador = Buyer::findOrFail($id); // Hacemos uso del global Scope
 
-        return response()->json(['data' => $comprador], 200);
+        // return response()->json(['data' => $comprador], 200);
+        return $this->showOne($comprador);
     }
 }

@@ -19,7 +19,8 @@ class SellerController extends ApiController
         $vendedores = Seller::all(); // Listará todos los Seller haciendo uso del global scope 
         // $vendedores = Seller::orderBy('id', 'asc')->get(); // Listará todos los Seller haciendo uso del global scope 
 
-        return response()->json(['data' => $vendedores], 200);
+        // return response()->json(['data' => $vendedores], 200);
+        return $this->showAll($vendedores);
     }
 
     /**
@@ -31,6 +32,7 @@ class SellerController extends ApiController
         // 
         $vendedor = Seller::findOrFail($id); // Hacemos uso del global Scope
 
-        return response()->json(['data' => $vendedor], 200);
+        // return response()->json(['data' => $vendedor], 200);
+        return $this->showOne($vendedor);
     }
 }
