@@ -10,6 +10,7 @@ use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -78,5 +79,12 @@ return Application::configure(basePath: dirname(__DIR__))
 
         //     return $apiResponser->errorResponse("No se encontró la URL especificada.", 404);
         // }); 
+        // 
+        $exceptions->render(function (MethodNotAllowedHttpException $e, Request $request) use ($apiResponser) {
+            $message = $e->getMessage();
+            $statusCode = $e->getStatusCode();
+
+            return $apiResponser->errorResponse('El método especificado en la petición no es válido', 405);
+        });
 
     })->create();
