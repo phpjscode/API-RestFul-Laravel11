@@ -3,6 +3,7 @@
 use App\Traits\ApiResponser;
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Application;
+use Illuminate\Auth\AuthenticationException;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -60,5 +61,9 @@ return Application::configure(basePath: dirname(__DIR__))
             }
             return $apiResponser->errorResponse("No se encontró la URL especificada.", 404);
         }); 
+
+        $exceptions->render(function (AuthenticationException $e, Request $request) use ($apiResponser) {
+            return $apiResponser->errorResponse('No autenticado.', 401);
+        });
 
     })->create();
