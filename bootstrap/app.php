@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 use Illuminate\Foundation\Application;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Validation\ValidationException;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -64,6 +65,10 @@ return Application::configure(basePath: dirname(__DIR__))
 
         $exceptions->render(function (AuthenticationException $e, Request $request) use ($apiResponser) {
             return $apiResponser->errorResponse('No autenticado.', 401);
+        });
+        
+        $exceptions->render(function (AuthorizationException $e, Request $request) use ($apiResponser) {
+            return $apiResponser->errorResponse('No posee permisos para ejecutar esta acción.', 403);
         });
 
     })->create();
