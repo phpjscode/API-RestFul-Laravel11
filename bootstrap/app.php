@@ -6,6 +6,8 @@ use Illuminate\Foundation\Application;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -24,7 +26,7 @@ return Application::configure(basePath: dirname(__DIR__))
             use ApiResponser;
         };
         
-        // Averiguar el tipo de la excepción que se dispara
+        // Averiguar el tipo de la excepción que se dispara (Throwable es la clase base de todas las excepciones de PHP Laravel)
         // $exceptions->render(function (Throwable $e, Request $request) {
         //     dd($e);
         // });
@@ -42,5 +44,21 @@ return Application::configure(basePath: dirname(__DIR__))
             return $apiResponser->errorResponse($errors, 422);
             // return $apiResponser->errorResponse($errors, $status);
         });
+
+        $exceptions->render(function (NotFoundHttpException $e, Request $request) use ($apiResponser) {
+            $message = $e->getMessage();
+            $statusCode = $e->getStatusCode();
+            $previous = $e->getPrevious();
+            if ($previous instanceof ModelNotFoundException) {
+                $message = $previous->getMessage();
+                $modelo = strtolower(class_basename($previous->getModel()));
+                $ids = $previous->getIds();
+                $id = $ids[0] ?? 'desconocido';
+                // dd($id);
+                return $apiResponser->errorResponse("No existe ninguna instancia de {$modelo} con el id {$id} especificado.", 404);
+                
+            }
+            return $apiResponser->errorResponse("No se encontró la URL especificada.", 404);
+        }); 
 
     })->create();
