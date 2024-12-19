@@ -3,6 +3,7 @@
 use App\Traits\ApiResponser;
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Application;
+use Illuminate\Database\QueryException;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Auth\Access\AuthorizationException;
@@ -89,10 +90,25 @@ return Application::configure(basePath: dirname(__DIR__))
         });
 
         $exceptions->render(function (HttpException $e, Request $request) use ($apiResponser) {
-            $getMessage = $e->getMessage();
-            $getStatusCode = $e->getStatusCode();
+            $message = $e->getMessage();
+            $statusCode = $e->getStatusCode();
 
-            return $apiResponser->errorResponse($getMessage, $getStatusCode);
+            return $apiResponser->errorResponse($message, $statusCode);
         });
+
+        $exceptions->render(function (QueryException $e, Request $request) use ($apiResponser) {
+            $code = $e->getCode();
+            $message = $e->getMessage();
+            $codigo = $e->errorInfo[1];
+
+            if ($codigo == 1451) {
+                return $apiResponser->errorResponse('No se puede eliminar de forma permanente el recurso porque está relacionado con algún otro.', 409);
+            } elseif ($codigo == 2002) {
+                return $apiResponser->errorResponse('No se puede conectar con la base de datos.', 500);
+            } else {
+                return $apiResponser->errorResponse($message, 500);
+            }
+        });
+
 
     })->create();
