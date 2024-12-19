@@ -8,8 +8,6 @@ use Illuminate\Foundation\Configuration\Middleware;
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
         // web: __DIR__.'/../routes/web.php',
-        // api: __DIR__.'/../routes/api.php',
-        // apiPrefix: 'api',
         using: function () {
             // Route::middleware('api')
             //     ->prefix('api')
@@ -32,5 +30,4 @@ return Application::configure(basePath: dirname(__DIR__))
     })
     ->withSingletons([
         \Illuminate\Contracts\Debug\ExceptionHandler::class => \App\Exceptions\Handler::class,
-    ])
-    ->create();
+    ])->create();
