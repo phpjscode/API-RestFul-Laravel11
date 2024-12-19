@@ -106,9 +106,16 @@ return Application::configure(basePath: dirname(__DIR__))
             } elseif ($codigo == 2002) {
                 return $apiResponser->errorResponse('No se puede conectar con la base de datos.', 500);
             } else {
-                return $apiResponser->errorResponse($message, 500);
+                // return $apiResponser->errorResponse($message, 500);
+                return $apiResponser->errorResponse('Falla inesperada. Intente luego.', 500);
             }
         });
+
+        if (config('app.debug')) {
+            return false;
+        }
+
+        return $apiResponser->errorResponse('Falla inesperada. Intente luego.', 500);
 
 
     })->create();
