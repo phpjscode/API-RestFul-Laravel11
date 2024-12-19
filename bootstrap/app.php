@@ -60,7 +60,8 @@ return Application::configure(basePath: dirname(__DIR__))
                 return $apiResponser->errorResponse("No existe ninguna instancia de {$modelo} con el id {$id} especificado.", 404);
                 
             }
-            return $apiResponser->errorResponse("No se encontró la URL especificada.", 404);
+            return $apiResponser->errorResponse($message, 404);
+            // return $apiResponser->errorResponse("No se encontró la URL especificada.", 404);
         }); 
 
         $exceptions->render(function (AuthenticationException $e, Request $request) use ($apiResponser) {
@@ -70,5 +71,12 @@ return Application::configure(basePath: dirname(__DIR__))
         $exceptions->render(function (AuthorizationException $e, Request $request) use ($apiResponser) {
             return $apiResponser->errorResponse('No posee permisos para ejecutar esta acción.', 403);
         });
+
+        // $exceptions->render(function (NotFoundHttpException $e, Request $request) use ($apiResponser) {
+        //     $message = $e->getMessage();
+        //     $statusCode = $e->getStatusCode();
+
+        //     return $apiResponser->errorResponse("No se encontró la URL especificada.", 404);
+        // }); 
 
     })->create();
