@@ -26,13 +26,15 @@ class SellerController extends ApiController
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    // public function show(string $id)
+    public function show(Seller $seller)
     {
         // $vendedor = Seller::has('products')->findOrFail($id);
         // 
-        $vendedor = Seller::findOrFail($id); // Hacemos uso del global Scope
+        // $vendedor = Seller::findOrFail($id); // Hacemos uso del global Scope
 
         // return response()->json(['data' => $vendedor], 200);
-        return $this->showOne($vendedor);
+        // return $this->showOne($vendedor);
+        return $this->showOne($seller);
     }
 }

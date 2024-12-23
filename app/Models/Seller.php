@@ -11,6 +11,17 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Seller extends User
 {
     /**
+     * Bootstrap the model and its traits.
+     *
+     * @return void
+     */
+    // protected static function boot()
+    // {
+    //     parent::boot();
+    //     static::addGlobalScope(new SellerScope);
+    // }
+    
+    /**
      * The "booted" method of the model.
      */
     protected static function booted(): void
