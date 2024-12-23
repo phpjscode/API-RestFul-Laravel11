@@ -32,15 +32,17 @@ class BuyerController extends ApiController
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    // public function show(string $id)
+    public function show(Buyer $buyer)
     {
         // $comprador = Buyer::has('transactions')->findOrFail($id);
         // 
         // $comprador = Buyer::hasTransactions()->findOrFail($id); // Hacemos uso del local Scope
         // 
-        $comprador = Buyer::findOrFail($id); // Hacemos uso del global Scope
+        // $comprador = Buyer::findOrFail($id); // Hacemos uso del global Scope
 
         // return response()->json(['data' => $comprador], 200);
-        return $this->showOne($comprador);
+        // return $this->showOne($comprador);
+        return $this->showOne($buyer);
     }
 }
