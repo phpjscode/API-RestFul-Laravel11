@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('status')->default(Product::PRODUCTO_NO_DISPONIBLE);
             $table->string('image');
             $table->bigInteger('seller_id')->unsigned();
+            $table->softDeletes();
             $table->timestamps();
 
             $table->foreign('seller_id')->references('id')->on('users');
