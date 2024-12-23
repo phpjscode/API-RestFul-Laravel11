@@ -6,6 +6,7 @@ use App\Models\Seller;
 use App\Models\Category;
 use App\Models\Transaction;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -13,7 +14,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Product extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
     
     const PRODUCTO_DISPONIBLE = 'disponible';
     const PRODUCTO_NO_DISPONIBLE = 'no disponible';
@@ -31,6 +32,18 @@ class Product extends Model
         'image',
         'seller_id',
     ];
+
+    /**
+     * Get the attributes that should be cast.
+     *
+     * @return array<string, string>
+     */
+    protected function casts(): array
+    {
+        return [
+            'deleted_at' => 'datetime',
+        ];
+    }
 
     public function estaDisponible()
     {
