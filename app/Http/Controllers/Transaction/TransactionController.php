@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Transaction;
 
+use App\Models\Transaction;
 use Illuminate\Http\Request;
 // use App\Http\Controllers\Controller;
 use App\Http\Controllers\ApiController;
@@ -14,37 +15,15 @@ class TransactionController extends ApiController
      */
     public function index()
     {
-        //
-    }
+        $transactions = Transaction::all();
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
+        return $this->showAll($transactions);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
+    public function show(Transaction $transaction)
     {
         //
     }
