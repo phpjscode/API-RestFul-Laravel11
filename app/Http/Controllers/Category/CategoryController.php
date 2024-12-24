@@ -56,7 +56,20 @@ class CategoryController extends ApiController
      */
     public function update(Request $request, Category $category)
     {
-        //
+        // $category->fill($request->intersect([
+        $category->fill($request->only([ // fill asigna datos a los atributos del modelo en forma masiva - only en Laravel 5.5 o superior
+            'name',
+            'description',
+        ]));
+
+        
+        if ($category->isClean()) { // isClean: Verifica que la instancia no haya cambiado
+            return $this->errorResponse('Debe especificar al menos un valor diferente para actualizar', 422);
+        }
+
+        $category->save();
+
+        return $this->showOne($category);
     }
 
     /**
