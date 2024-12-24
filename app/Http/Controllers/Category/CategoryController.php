@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Category;
 
+use App\Models\Category;
 use Illuminate\Http\Request;
 // use App\Http\Controllers\Controller;
 use App\Http\Controllers\ApiController;
@@ -14,7 +15,9 @@ class CategoryController extends ApiController
      */
     public function index()
     {
-        //
+        $categories = Category::all();
+
+        return $this->showAll($categories);
     }
 
     /**
@@ -28,7 +31,7 @@ class CategoryController extends ApiController
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Category $category)
     {
         //
     }
@@ -36,7 +39,7 @@ class CategoryController extends ApiController
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Category $category)
     {
         //
     }
@@ -44,7 +47,7 @@ class CategoryController extends ApiController
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Category $category)
     {
         //
     }
