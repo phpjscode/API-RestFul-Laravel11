@@ -33,7 +33,7 @@ class CategoryController extends ApiController
      */
     public function show(Category $category)
     {
-        //
+        return $this->showOne($category);
     }
 
     /**
